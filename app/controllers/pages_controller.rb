@@ -8,4 +8,7 @@ class PagesController < ApplicationController
 
   def about
   end
+
+  # def corrective_action
+  # end
 end

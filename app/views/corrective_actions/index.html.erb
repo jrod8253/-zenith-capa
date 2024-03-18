@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-md-6">
+      <h1>List of all Corrective Actions</h1>
+    </div>
+    <div class="col-md-3">
+      <%# Add a button to create a new corrective action%>
+      <%= link_to 'Create New Corrective Action', new_corrective_action_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+
+
+<%# If no corrective actions are found, the following message will be displayed: %>
+<% if @corrective_action.blank? %>
+  <p>No corrective actions found</p>
+<% end %>
+
+<div class="container">
+  <div class="col-md-12">
+    <%# Add a search form to search for corrective actions%>
+    <%= form_tag corrective_actions_path, method: :get do %>
+      <div class="form-group">
+        <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search for corrective actions" %>
+      </div>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <div class="col-md-12">
+    <%# Add a table to display the title, description, status, severity, source, date created, date updated, and buttons to show, edit, and delete the corrective action%>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Status</th>
+          <th scope="col">Severity</th>
+          <th scope="col">Source</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Date Updated</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%# For each corrective action, display the id, title, description, status, severity, source, date created, date updated, and buttons to show, edit, and delete the corrective action%>
+        <% @corrective_action.each do |corrective_action| %>
+          <tr>
+            <td><%= corrective_action.id %></td>
+            <td><%= corrective_action.title %></td>
+            <%# Limit the description character length to 50%>
+            <td><%= truncate(corrective_action.description, length: 50) %></td>
+            <td><%= corrective_action.status %></td>
+            <td><%= corrective_action.severity %></td>
+            <td><%= corrective_action.source %></td>
+            <td><%= corrective_action.created_at.strftime("%m-%d-%Y") %></td>
+            <td><%= corrective_action.updated_at.strftime("%m-%d-%Y") %></td>
+            <td>
+              <%= link_to 'Show', corrective_action_path(corrective_action) %>
+              <%= link_to 'Edit', edit_corrective_action_path(corrective_action) %>
+              <%= link_to 'Delete', corrective_action_path(corrective_action), method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+
+  </div>
+</div>
