@@ -19,21 +19,22 @@
       <h2>Source: <%= @corrective_action.source %> </h2>
       <%# show the date created of the corrective action%>
       <%# modify the date to show as MM-DD-YYYY%>
-      <h2>Date Created: <%= @corrective_action.created_at.strftime("%m-%d-%Y") %> </h2>
+      <h2>Date Opend: <%= @corrective_action.date_opened.strftime("%m-%d-%Y") %> </h2>
       <%# show the date updated of the corrective action%>
       <%# modify the date to show as MM-DD-YYYY%>
       <h2>Date Updated: <%= @corrective_action.updated_at.strftime("%m-%d-%Y") %> </h2>
-      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <%# Add a button to go back to the list of corrective actions%>
+      <%= link_to 'Back to Corrective Actions', corrective_actions_path, class: "btn btn-primary" %>
+      <%# Add a button to edit the corrective action%>
+      <%= link_to 'Update Corrective Action', edit_corrective_action_path(@corrective_action), class: "btn btn-secondary" %>
+      <%# Add a button to delete the corrective action only for the user who created the corrective action%>
+      <% if @corrective_action.user_id == current_user.id %>
+        <%= button_to 'Delete Corrective Action', corrective_action_path(@corrective_action), method: :delete, data: { confirm: "Are you sure?"} , class: 'btn btn-danger' %>
+      <% end %>
     </div>
   </div>
 </div>
-
-
-<%# Add a button to go back to the list of corrective actions%>
-<%= link_to 'Back to Corrective Actions', corrective_actions_path, class: "btn btn-primary" %>
-<%# Add a button to edit the corrective action%>
-<%= link_to 'Edit Corrective Action', edit_corrective_action_path(@corrective_action), class: "btn btn-secondary" %>
-<%# Add a button to delete the corrective action only for the user who created the corrective action%>
-<% if @corrective_action.user_id == current_user.id %>
-  <%= link_to 'Delete Corrective Action', corrective_action_path(@corrective_action), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-<% end %>
