@@ -1,9 +1,9 @@
 <div class="container">
   <div class="row justify-content-between">
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-12">
       <h1>List of all Corrective Actions</h1>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4 col-sm-12 d-flex justify-content-md-end justify-content-sm-start align-items-center">
       <%# Add a button to create a new corrective action%>
       <%= link_to 'Create New Corrective Action', new_corrective_action_path, class: "btn btn-primary" %>
     </div>
@@ -31,13 +31,13 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">ID</th>
+          <th scope="col">Issue ID</th>
           <th scope="col">Title</th>
           <th scope="col">Description</th>
           <th scope="col">Status</th>
-          <th scope="col">Severity</th>
+          <th scope="col">Severity/Type</th>
           <th scope="col">Source</th>
-          <th scope="col">Date Created</th>
+          <th scope="col">Date Opened</th>
           <th scope="col">Date Updated</th>
           <th scope="col">Actions</th>
         </tr>
@@ -50,15 +50,15 @@
             <td><%= corrective_action.title %></td>
             <%# Limit the description character length to 50%>
             <td><%= truncate(corrective_action.description, length: 50) %></td>
-            <td><%= corrective_action.status %></td>
+            <td><%= corrective_action.status ? 'Open' : 'Closed' %></td>
             <td><%= corrective_action.severity %></td>
             <td><%= corrective_action.source %></td>
-            <td><%= corrective_action.created_at.strftime("%m-%d-%Y") %></td>
+            <td><%= corrective_action.date_opened.strftime("%m-%d-%Y") %></td>
             <td><%= corrective_action.updated_at.strftime("%m-%d-%Y") %></td>
             <td>
               <%= link_to 'Show', corrective_action_path(corrective_action) %>
               <%= link_to 'Edit', edit_corrective_action_path(corrective_action) %>
-              <%= link_to 'Delete', corrective_action_path(corrective_action), method: :delete, data: { confirm: 'Are you sure?' } %>
+              <%= button_to 'Delete', corrective_action_path(corrective_action), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
             </td>
           </tr>
         <% end %>
