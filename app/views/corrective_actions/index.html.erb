@@ -20,19 +20,32 @@
         <p>No corrective actions found</p>
       </div>
     <% else %>
-      <div class="col-md-12">
         <%# Add a search form to search for corrective actions%>
         <%= form_tag corrective_actions_path, method: :get do %>
           <div class="form-group">
-            <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search for corrective actions" %>
+            <div class="row mb-3 g-3">
+              <label for="serachFieldCorrectiveActionIndex" class="col-md-2 col-form-label">Search</label>
+              <div class="col-md-10">
+                <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search for corrective actions", id: "serachFieldCorrectiveActionIndex" %>
+              </div>
+            </div>
+            <div class="row mb-3 g-3">
+              <label for="searchBy" class="col-md-2 col-form-label">Search By</label>
+              <div class="col-md-10">
+                <%= select_tag :search_by, options_for_select(["Title", "Description"], params[:search_by]), class: "form-control", id: "searchBy" %>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-2">
+                <%= submit_tag "Search", class: "btn btn-primary" %>
+              </div>
+            </div>
           </div>
-          <%= submit_tag "Search", class: "btn btn-primary" %>
         <% end %>
-      </div>
       <div class="col-md-12">
         <%# Add a table to display the title, description, status, severity, source, date created, date updated, and buttons to show, edit, and delete the corrective action%>
-        <table class="table table-striped">
-          <thead>
+        <table class="table table-striped table-hover">
+          <thead class="table-primary">
             <tr>
               <th scope="col">Issue ID</th>
               <th scope="col">Title</th>
@@ -46,7 +59,7 @@
               <th scope="col">Edit</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-group-divider">
             <%# For each corrective action, display the id, title, description, status, severity, source, date created, date updated, and buttons to show, edit, and delete the corrective action%>
             <% @corrective_action.each do |corrective_action| %>
             <%# for each table row, make that a button_to, corrective_action_path %>
